@@ -7,6 +7,12 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.football, function (sprite, other
     teamhd.setVelocity(50, 0)
     scene.cameraShake(4, 500)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.football, function (sprite, otherSprite) {
+    enemy_football_1.setVelocity(randint(50, 100), 100)
+    scene.cameraShake(4, 500)
+    music.powerUp.play()
+})
+let enemy_football_1: Sprite = null
 let ball: Sprite = null
 let teamhd: Sprite = null
 storyboard.loaderBootSequence.register()
@@ -220,7 +226,7 @@ ball = sprites.create(img`
     ....................fffff........fff
     `, SpriteKind.football)
 ball.setFlag(SpriteFlag.BounceOnWall, true)
-let enemy_football_1 = sprites.create(img`
+enemy_football_1 = sprites.create(img`
     . . . . . . . . c c c c . . . . 
     . . . . . . c c d d d d c . . . 
     . . . . . c c c c c c d c . . . 
