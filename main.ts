@@ -3,18 +3,17 @@ namespace SpriteKind {
     export const football = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.football, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
     ball.setVelocity(randint(50, 100), 100)
-    teamhd.setVelocity(50, 0)
     scene.cameraShake(4, 500)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.football, function (sprite, otherSprite) {
-    enemy_football_1.setVelocity(randint(50, 100), 100)
+    otherSprite.setVelocity(randint(50, 100), -100)
+    info.changeScoreBy(1)
     scene.cameraShake(4, 500)
     music.powerUp.play()
 })
-let enemy_football_1: Sprite = null
 let ball: Sprite = null
-let teamhd: Sprite = null
 storyboard.loaderBootSequence.register()
 storyboard.start("")
 info.setScore(0)
@@ -172,7 +171,7 @@ let dead_zone = sprites.create(img`
     ....................................................................................................
     ....................................................................................................
     `, SpriteKind.dead)
-teamhd = sprites.create(img`
+let teamhd = sprites.create(img`
     ....................................................................................................
     ....................................................................................................
     ....................................................................................................
@@ -203,7 +202,7 @@ teamhd = sprites.create(img`
     .ff....f...........................................fff..............................................
     ff......f.........................................ffff..............................................
     f.......fff......................................f...ff.............................................
-    `, SpriteKind.Player)
+    `, SpriteKind.Enemy)
 teamhd.setPosition(74, 37)
 teamhd.setVelocity(50, 0)
 teamhd.setFlag(SpriteFlag.BounceOnWall, true)
@@ -225,8 +224,9 @@ ball = sprites.create(img`
     ..............cccfffbdbbfcc.....fbbf
     ....................fffff........fff
     `, SpriteKind.football)
+ball.setVelocity(74, 90)
 ball.setFlag(SpriteFlag.BounceOnWall, true)
-enemy_football_1 = sprites.create(img`
+let enemy_football_1 = sprites.create(img`
     . . . . . . . . c c c c . . . . 
     . . . . . . c c d d d d c . . . 
     . . . . . c c c c c c d c . . . 
@@ -243,9 +243,9 @@ enemy_football_1 = sprites.create(img`
     . . . . . . f f f f d d d c . . 
     . . . . . . . . . . c c c . . . 
     . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Player)
+    `, SpriteKind.Enemy)
 enemy_football_1.setPosition(82, 12)
-enemy_football_1.setFlag(SpriteFlag.BounceOnWall, true)
+enemy_football_1.setFlag(SpriteFlag.StayInScreen, true)
 let team = sprites.create(img`
     ....................................................................................................
     ....................................................................................................
@@ -278,6 +278,8 @@ let team = sprites.create(img`
     ..................ff...............................ff...............................................
     ....................................................ff..............................................
     `, SpriteKind.Player)
+team.setFlag(SpriteFlag.BounceOnWall, true)
+team.setVelocity(50, 0)
 team.setPosition(74, 85)
 let football_2 = sprites.create(img`
     . . . . . . . . c c c c c . . . 
